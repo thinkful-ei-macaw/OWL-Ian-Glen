@@ -1,12 +1,11 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import Participants from './participant';
-import './App.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-      <Participants
+
+it('renders without crashing', () => {
+    const div = document.createElement('div');
+    ReactDOM.render(<Participants
     participants = {[{
           id: 1,
       name: 'Koren Templeton',
@@ -31,10 +30,6 @@ function App() {
       onStage: false
     }]}
       
-    />
-      </header>
-    </div>
-  );
-}
-
-export default App;
+    />, div);
+    ReactDOM.unmountComponentAtNode(div);
+  })
