@@ -1,40 +1,38 @@
 import React from 'react';
-import Participants from './participant';
-import './App.css';
+import List from './List';
+import Stage from './Stage';
+import './Styles/App.css'
+import Chat from './Chat';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-      <Participants
-    participants = {[{
-          id: 1,
-      name: 'Koren Templeton',
-      avatar:
-      'https://robohash.org/itaquevoluptatumrerum.jpg?size=200x200&set=set1',
-      inSession: true,
-      onStage: true
-        },
-    {
-      id: 2,
-      name: 'Caty Flucker',
-      avatar:
-        'https://robohash.org/doloredolorescupiditate.jpg?size=200x200&set=set1',
-      inSession: true,
-      onStage: false
-    },
-    {
-      id: 3,
-      name: 'Axe Kubicka',
-      avatar: 'https://robohash.org/utlaborumfugit.jpg?size=200x200&set=set1',
-      inSession: false,
-      onStage: false
-    }]}
-      
-    />
-      </header>
-    </div>
+
+export default function App(props) {
+
+  const newList = props.participants.map(list =>
+    <List name={list.name} avatar={list.avatar} inSession={list.inSession} onStage={list.onStage} />
   );
+  const newStage = props.participants.map(user => {
+    if (user.onStage) {
+      return <Stage name={user.name} avatar={user.avatar} onStage={user.onStage} />
+    }
+    return undefined;
+  });
+
+  const chatlog = props.chatlog.map(chat =>
+    <Chat type={chat.type} message={chat.message} time={chat.time} participant={props.participants.find(user => user.id === chat.participantId)} />
+  );
+
+  return (
+    <main className='App'>
+      <ul className="user-list">
+        {newList}
+      </ul>
+      <div className='stage'>{newStage}</div>
+      <div>
+        {chatlog}
+        <textarea columns={50} rows={2} placeholder="chat"></textarea>
+      </div>
+    </main>
+  );
+
 }
 
-export default App;
